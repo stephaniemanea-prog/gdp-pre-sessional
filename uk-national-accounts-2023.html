@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UK National Accounts 2023</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#FAFAF7;--paper-raised:#FFF;--ink:#16213C;--ink-soft:#52586b;--ink-faint:#8890a3;--line:#E1DED2;
+--lens:#1F6F6F;--lens-ink:#144F4F;--lens-soft:#E4F1EE;--alt:#B5651D;--alt-ink:#8A4A15;--alt-soft:#FBEEE0;
+--shadow:0 1px 2px rgba(22,33,60,.06),0 4px 16px rgba(22,33,60,.06);
+--serif:"Source Serif 4",Georgia,serif;--sans:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;}
+:root:not([data-theme="light"]){@media (prefers-color-scheme:dark){
+--paper:#12141C;--paper-raised:#191B26;--ink:#ECEAE2;--ink-soft:#B7B9C6;--ink-faint:#7A7E8F;--line:#2A2D3B;
+--lens:#4FBFB0;--lens-ink:#7ED9CC;--lens-soft:#16302C;--alt:#E0964F;--alt-ink:#F2B379;--alt-soft:#35281A;
+--shadow:0 1px 2px rgba(0,0,0,.3),0 4px 20px rgba(0,0,0,.35);}}
+:root[data-theme="dark"]{--paper:#12141C;--paper-raised:#191B26;--ink:#ECEAE2;--ink-soft:#B7B9C6;--ink-faint:#7A7E8F;
+--line:#2A2D3B;--lens:#4FBFB0;--lens-ink:#7ED9CC;--lens-soft:#16302C;--alt:#E0964F;--alt-ink:#F2B379;--alt-soft:#35281A;
+--shadow:0 1px 2px rgba(0,0,0,.3),0 4px 20px rgba(0,0,0,.35);}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.6;font-size:16px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px 90px}
+@media(max-width:640px){.wrap{padding:0 16px 60px}}
+h1,h2{font-family:var(--serif);font-weight:600;margin:0 0 .4em}
+p{color:var(--ink-soft);margin:0 0 1em}
+a{color:var(--lens-ink)}
+header.pg{padding:52px 0 28px;border-bottom:1px solid var(--line);margin-bottom:8px}
+header.pg h1{font-size:2.1rem;letter-spacing:-.01em;margin-bottom:.25em}
+header.pg .sub{font-family:var(--mono);font-size:12.5px;color:var(--ink-faint)}
+.backlink{display:inline-block;font-size:13px;font-family:var(--mono);color:var(--ink-faint);text-decoration:none;margin-bottom:20px}
+.backlink:hover{color:var(--lens-ink)}
+.convention{background:var(--paper-raised);border:1px solid var(--line);border-left:3px solid var(--lens);
+border-radius:10px;padding:18px 20px;box-shadow:var(--shadow);margin:26px 0 34px}
+.convention .lab{font-family:var(--mono);font-size:11px;color:var(--lens-ink);display:block;margin-bottom:6px}
+.convention p:last-child{margin-bottom:0}
+.chain{font-family:var(--mono);font-size:12.5px;color:var(--ink);background:var(--lens-soft);
+padding:8px 12px;border-radius:6px;display:inline-block;margin-top:4px}
+.acct{margin:44px 0 0}
+.arrow{display:flex;justify-content:center;color:var(--alt);font-size:22px;line-height:1;margin:0 0 -2px}
+.explain{background:var(--alt-soft);border:1px solid var(--alt);border-radius:10px;padding:16px 20px;margin-bottom:20px}
+.explain .lab{font-family:var(--mono);font-size:11px;color:var(--alt-ink);display:block;margin-bottom:6px}
+.explain p{color:var(--ink-soft);font-size:14px;margin:0}
+.acct h2{font-size:1.35rem;margin-top:8px}
+.acct .worksheet{font-family:var(--mono);font-size:12px;color:var(--ink-faint);margin-bottom:4px}
+.tcap{font-family:var(--mono);font-size:12px;color:var(--ink-faint);margin:22px 0 8px}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:9px;background:var(--paper-raised)}
+table.na{border-collapse:collapse;width:100%;min-width:940px;font-size:12.5px}
+table.na th,table.na td{padding:6px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+table.na thead th{position:sticky;top:0;background:var(--paper-raised);border-bottom:1.5px solid var(--ink-faint);
+vertical-align:bottom;font-weight:500;text-align:right}
+table.na thead th.c,table.na thead th.l{text-align:left}
+.hn{display:block;font-family:var(--sans);font-size:11px;color:var(--ink-soft);white-space:normal;max-width:110px;margin-left:auto}
+.hc{display:block;font-family:var(--mono);font-size:10px;color:var(--ink-faint);margin-top:2px}
+td.c{font-family:var(--mono);font-size:11px;color:var(--ink-faint);width:58px}
+td.l{font-family:var(--sans);color:var(--ink-soft);white-space:normal;min-width:230px}
+td.num{font-family:var(--mono);text-align:right;color:var(--ink)}
+.dash{color:var(--ink-faint)}
+tr.tot td{font-weight:600;background:rgba(136,144,163,.07)}
+tr.tot td.l{color:var(--ink)}
+tr.bal td{font-weight:700;color:var(--alt-ink);border-bottom:1.5px solid var(--ink-faint);background:var(--alt-soft)}
+tr.bal td.l,tr.bal td.c{color:var(--alt-ink)}
+tr.disc td{color:var(--ink-faint);font-style:italic}
+.note{border-left:3px solid var(--line);padding:12px 0 12px 16px;margin:26px 0;font-size:13.2px;color:var(--ink-soft)}
+.note .lab{font-family:var(--mono);font-size:11px;color:var(--ink-faint);display:block;margin-bottom:5px}
+.note p{font-size:13.2px;margin:0 0 .7em}
+.note p:last-child{margin-bottom:0}
+
+.checkq-section{margin:46px 0}
+.checkq-intro{margin-bottom:26px}
+.checkq{background:var(--paper-raised);border:1px solid var(--line);border-radius:10px;padding:20px 22px;margin-bottom:18px;box-shadow:var(--shadow)}
+.checkq h3{font-family:var(--sans);font-size:15px;font-weight:600;margin:0 0 4px}
+.checkq .formula{font-family:var(--mono);font-size:14px;color:var(--lens-ink);background:var(--lens-soft);display:inline-block;padding:6px 12px;border-radius:6px;margin:8px 0 16px}
+.checkq-row{display:flex;flex-wrap:wrap;align-items:flex-end;gap:6px;margin-bottom:6px}
+.checkq-field{display:flex;flex-direction:column;gap:4px;min-width:96px}
+.checkq-field label{font-size:11.5px;color:var(--ink-faint);line-height:1.3}
+.checkq-field input{font-family:var(--mono);font-size:14px;padding:7px 8px;border:1px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink);width:96px}
+.checkq-field input:focus{outline:2px solid var(--lens);outline-offset:1px}
+.checkq-op{font-family:var(--mono);font-size:16px;color:var(--ink-faint);padding-bottom:9px}
+.checkq-eq{font-family:var(--mono);font-size:14px;color:var(--ink-faint);padding-bottom:9px;margin-left:4px}
+.checkq-btn{font-family:var(--sans);font-weight:600;font-size:13px;background:var(--lens);color:#fff;border:none;border-radius:7px;padding:9px 16px;cursor:pointer;margin-top:10px}
+.checkq-btn:hover{filter:brightness(0.95)}
+.checkq-result{margin-top:14px;padding:12px 14px;border-radius:8px;font-size:13.5px;display:none}
+.checkq-result.show{display:block}
+.checkq-result.correct{background:rgba(46,125,79,.1);color:var(--good, #2E7D4F)}
+.checkq-result.incorrect{background:rgba(179,58,58,.1);color:var(--bad, #B33A3A)}
+.checkq-result .verdict{font-weight:700;display:block;margin-bottom:4px}
+.checkq-result .sum{font-family:var(--mono);font-size:13px;display:block;margin-bottom:6px}
+.checkq-result .solution{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);border-top:1px solid rgba(0,0,0,.08);padding-top:8px;margin-top:8px}
+footer.src{margin-top:52px;padding-top:22px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-faint)}
+footer.src a{color:var(--lens-ink)}
+</style></head>
+<body><div class="wrap"><a class="backlink" href="#" onclick="history.back();return false;">← Back</a>
+<header class="pg">
+<h1>UK National Accounts 2023</h1>
+<div class="sub">Summary accounts by institutional sector · &pound; million · current prices</div>
+</header>
+
+<div class="convention">
+<span class="lab">HOW TO READ THESE TABLES</span>
+<p>Each account has two sides. <strong>Resources</strong> are what comes in to a sector; <strong>uses</strong> are what goes out. The two must match, and the figure that makes them match — the balancing item, shown in orange — is carried down into the account below. That is how the sequence links together:</p>
+<span class="chain">GDP → operating surplus → disposable income → saving → net lending</span>
+</div>
+
+<section class="acct">
+<div class="arrow">↓</div>
+<div class="explain"><span class="lab">WHAT THIS ACCOUNT SHOWS</span><p>What was produced, and what it took to produce it. The resources side lists everything available to the economy: output from each sector, plus taxes less subsidies on products, plus imports. The uses side subtracts intermediate consumption — the goods and services used up in making other goods and services — and what remains is gross domestic product. Exports appear here as a use, because the rest of the world is who buys them. Subtracting the wear and tear on buildings and machinery gives net domestic product.</p></div>
+<h2>Production account</h2>
+<div class="tcap">Table 1.7.1_a: Production account, Resources</div><div class="scroll"><table class="na"><thead><tr><th class="c">Code</th><th class="l">Item</th><th class="num"><span class="hn">UK total economy</span><span class="hc">S.1</span></th><th class="num"><span class="hn">Non-financial corporations</span><span class="hc">S.11</span></th><th class="num"><span class="hn">Financial corporations</span><span class="hc">S.12</span></th><th class="num"><span class="hn">General government</span><span class="hc">S.13</span></th><th class="num"><span class="hn">Households &amp; NPISH</span><span class="hc">S.14+S.15</span></th><th class="num"><span class="hn">Rest of the world</span><span class="hc">S.2</span></th></tr></thead><tbody>
+<tr><td class="c">P.11</td><td class="l">Market output</td><td class="num">3,823,101</td><td class="num">3,054,280</td><td class="num">378,545</td><td class="num">1,407</td><td class="num">388,869</td><td class="num"><span class="dash">–</span></td></tr>
+<tr><td class="c">P.12</td><td class="l">Output for own final use</td><td class="num">384,813</td><td class="num">93,280</td><td class="num">7,149</td><td class="num">6,546</td><td class="num">277,838</td><td class="num"><span class="dash">–</span></td></tr>
+<tr><td class="c">P.13</td><td class="l">Non-market output</td><td class="num">611,892</td><td class="num"><span class="dash">–</span></td><td class="num">491</td><td class="num">552,289</td><td class="num">59,112</td><td class="num"><span class="dash">–</span></td></tr>
+<tr class="tot"><td class="c">P.1</td><td class="l">Total output</td><td class="num">4,819,806</td><td class="num">3,147,560</td><td class="num">386,185</td><td class="num">560,242</td><td class="num">725,819</td><td class="num"><span class="dash">–</span></td></tr>
+<tr><td class="c">D.21</td><td class="l">Taxes on products</td><td class="num">291,938</td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td></tr>
+<tr><td class="c">D.31</td><td class="l">less subsidies on products</td><td class="num">37,164</td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td></tr>
+<tr><td class="c">P.71</td><td class="l">Imports of goods</td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num">609,467</td></tr>
+<tr><td class="c">P.72</td><td class="l">Imports of services</td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num">300,952</td></tr>
+<tr class="tot"><td class="c">P.7</td><td class="l">Total imports of goods and services</td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num">910,419</td></tr>
+<tr class="tot"><td class="c">TR</td><td class="l">Total resources</td><td class="num">5,074,580</td><td class="num">3,147,560</td><td class="num">386,185</td><td class="num">560,242</td><td class="num">725,819</td><td class="num">910,419</td></tr>
+</tbody></table></div><div class="tcap">Table 1.7.1_b: Production account, Uses and net domestic product</div><div class="scroll"><table class="na"><thead><tr><th class="c">Code</th><th class="l">Item</th><th class="num"><span class="hn">UK total economy</span><span class="hc">S.1</span></th><th class="num"><span class="hn">Non-financial corporations</span><span class="hc">S.11</span></th><th class="num"><span class="hn">Financial corporations</span><span class="hc">S.12</span></th><th class="num"><span class="hn">General government</span><span class="hc">S.13</span></th><th class="num"><span class="hn">Households &amp; NPISH</span><span class="hc">S.14+S.15</span></th><th class="num"><span class="hn">Rest of the world</span><span class="hc">S.2</span></th></tr></thead><tbody>
+<tr><td class="c">P.2</td><td class="l">Intermediate consumption</td><td class="num">2,322,416</td><td class="num">1,683,330</td><td class="num">182,496</td><td class="num">237,159</td><td class="num">219,431</td><td class="num"><span class="dash">–</span></td></tr>
+<tr class="bal"><td class="c">B.1*g</td><td class="l">Gross domestic product</td><td class="num">2,752,164</td><td class="num">1,464,230</td><td class="num">203,689</td><td class="num">323,083</td><td class="num">506,388</td><td class="num"><span class="dash">–</span></td></tr>
+<tr><td class="c">P.61</td><td class="l">Exports of goods</td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num">417,331</td></tr>
+<tr><td class="c">P.62</td><td class="l">Exports of services</td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num">460,947</td></tr>
+<tr class="tot"><td class="c">P.6</td><td class="l">Total exports of goods and services</td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num">878,278</td></tr>
+<tr class="bal"><td class="c">B.11</td><td class="l">External balance of international trade in goods and services</td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num">32,141</td></tr>
+<tr class="tot"><td class="c">TU</td><td class="l">Total uses</td><td class="num">5,074,580</td><td class="num">3,147,560</td><td class="num">386,185</td><td class="num">560,242</td><td class="num">725,819</td><td class="num">910,419</td></tr>
+<tr class="bal"><td class="c">B.1*g</td><td class="l">Gross domestic product</td><td class="num">2,752,164</td><td class="num">1,464,230</td><td class="num">203,689</td><td class="num">323,083</td><td class="num">506,388</td><td class="num"><span class="dash">–</span></td></tr>
+<tr><td class="c">P.51c</td><td class="l">less consumption of fixed capital</td><td class="num">420,544</td><td class="num">238,615</td><td class="num">18,423</td><td class="num">56,355</td><td class="num">107,151</td><td class="num"><span class="dash">–</span></td></tr>
+<tr class="bal"><td class="c">B.1*n</td><td class="l">Net domestic product</td><td class="num">2,331,620</td><td class="num">1,225,615</td><td class="num">185,266</td><td class="num">266,728</td><td class="num">399,237</td><td class="num"><span class="dash">–</span></td></tr>
+</tbody></table></div>
+</section>
+
+<section class="acct">
+<div class="arrow">↓</div>
+<div class="explain"><span class="lab">WHAT THIS ACCOUNT SHOWS</span><p>Who earned the value that was just produced. Gross domestic product enters as a resource and is paid out on the uses side: to employees as wages and employers&rsquo; social contributions, and to government as taxes on production less subsidies. What is left over is the balancing item — operating surplus, which is broadly profit, and mixed income, the earnings of the self-employed, where wage and profit cannot be separated.</p></div>
+<h2>Generation of income account</h2>
+<div class="tcap">Table 1.7.2_a: Generation of income account, Resources</div><div class="scroll"><table class="na"><thead><tr><th class="c">Code</th><th class="l">Item</th><th class="num"><span class="hn">UK total economy</span><span class="hc">S.1</span></th><th class="num"><span class="hn">Non-financial corporations</span><span class="hc">S.11</span></th><th class="num"><span class="hn">Financial corporations</span><span class="hc">S.12</span></th><th class="num"><span class="hn">General government</span><span class="hc">S.13</span></th><th class="num"><span class="hn">Households &amp; NPISH</span><span class="hc">S.14+S.15</span></th><th class="num"><span class="hn">Rest of the world</span><span class="hc">S.2</span></th></tr></thead><tbody>
+<tr class="bal"><td class="c">B.1*g</td><td class="l">Gross domestic product</td><td class="num">2,752,164</td><td class="num">1,464,230</td><td class="num">203,689</td><td class="num">323,083</td><td class="num">506,388</td><td class="num"><span class="dash">–</span></td></tr>
+</tbody></table></div><div class="tcap">Table 1.7.2_b: Generation of income account, Uses and net mixed income</div><div class="scroll"><table class="na"><thead><tr><th class="c">Code</th><th class="l">Item</th><th class="num"><span class="hn">UK total economy</span><span class="hc">S.1</span></th><th class="num"><span class="hn">Non-financial corporations</span><span class="hc">S.11</span></th><th class="num"><span class="hn">Financial corporations</span><span class="hc">S.12</span></th><th class="num"><span class="hn">General government</span><span class="hc">S.13</span></th><th class="num"><span class="hn">Households &amp; NPISH</span><span class="hc">S.14+S.15</span></th><th class="num"><span class="hn">Rest of the world</span><span class="hc">S.2</span></th></tr></thead><tbody>
+<tr><td class="c">D.11</td><td class="l">Wages and salaries</td><td class="num">1,095,207</td><td class="num">766,985</td><td class="num">81,275</td><td class="num">199,101</td><td class="num">47,846</td><td class="num">1,626</td></tr>
+<tr><td class="c">D.12</td><td class="l">Employers’ social contributions</td><td class="num">234,571</td><td class="num">138,755</td><td class="num">17,530</td><td class="num">67,627</td><td class="num">10,659</td><td class="num"><span class="dash">–</span></td></tr>
+<tr class="tot"><td class="c">D.1</td><td class="l">Total compensation of employees</td><td class="num">1,329,778</td><td class="num">905,740</td><td class="num">98,805</td><td class="num">266,728</td><td class="num">58,505</td><td class="num">1,626</td></tr>
+<tr><td class="c">D.21</td><td class="l">Taxes on products</td><td class="num">291,938</td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num">0</td></tr>
+<tr><td class="c">D.29</td><td class="l">Other taxes on production [note 19]</td><td class="num">44,094</td><td class="num">40,235</td><td class="num">3,448</td><td class="num">0</td><td class="num">411</td><td class="num"><span class="dash">–</span></td></tr>
+<tr class="tot"><td class="c">D.2</td><td class="l">Total taxes on production and imports, paid</td><td class="num">336,032</td><td class="num">40,235</td><td class="num">3,448</td><td class="num">0</td><td class="num">411</td><td class="num">0</td></tr>
+<tr><td class="c">D.31</td><td class="l">Subsidies on products</td><td class="num">37,164</td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td></tr>
+<tr><td class="c">D.39</td><td class="l">Other subsidies on production</td><td class="num">17,866</td><td class="num">17,582</td><td class="num">284</td><td class="num">0</td><td class="num">0</td><td class="num"><span class="dash">–</span></td></tr>
+<tr class="tot"><td class="c">D.3</td><td class="l">Less subsidies, received: Total</td><td class="num">55,030</td><td class="num">17,582</td><td class="num">284</td><td class="num">0</td><td class="num">0</td><td class="num"><span class="dash">–</span></td></tr>
+<tr class="bal"><td class="c">B.2g</td><td class="l">Operating surplus, gross</td><td class="num">971,499</td><td class="num">535,837</td><td class="num">101,720</td><td class="num">56,355</td><td class="num">277,587</td><td class="num"><span class="dash">–</span></td></tr>
+<tr class="bal"><td class="c">B.3g</td><td class="l">Mixed income, gross</td><td class="num">169,885</td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num">169,885</td><td class="num"><span class="dash">–</span></td></tr>
+<tr class="disc"><td class="c">di</td><td class="l">Statistical discrepancy between income components and GDP</td><td class="num">0</td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td></tr>
+<tr class="bal"><td class="c">B.1*g</td><td class="l">Total uses (gross domestic product)</td><td class="num">2,752,164</td><td class="num">1,464,230</td><td class="num">203,689</td><td class="num">323,083</td><td class="num">506,388</td><td class="num"><span class="dash">–</span></td></tr>
+<tr><td class="c">P.51c</td><td class="l">less consumption of fixed capital [note 20]</td><td class="num">420,544</td><td class="num">238,615</td><td class="num">18,423</td><td class="num">56,355</td><td class="num">107,151</td><td class="num"><span class="dash">–</span></td></tr>
+<tr class="bal"><td class="c">B.2n</td><td class="l">Operating surplus, net</td><td class="num">556,831</td><td class="num">297,222</td><td class="num">83,297</td><td class="num">0</td><td class="num">176,312</td><td class="num"><span class="dash">–</span></td></tr>
+<tr class="bal"><td class="c">B.3n</td><td class="l">Mixed income, net</td><td class="num">164,009</td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num">164,009</td><td class="num"><span class="dash">–</span></td></tr>
+</tbody></table></div>
+</section>
+
+<div class="note"><span class="lab">NOTE — ACCOUNTS NOT SHOWN HERE</span>
+<p>The next account below opens with <strong>gross disposable income</strong> already calculated. That figure is not produced out of thin air: it is the result of three accounts sitting between the generation of income account and the use of disposable income account, which have been left out here to keep this page readable. If you want to see how income gets from operating surplus to disposable income, those are the accounts to look up in the Blue Book:</p>
+<p><strong>1.7.3 — Allocation of primary income account.</strong> Carries operating surplus, mixed income, compensation of employees, taxes less subsidies on production and imports, and property income through to the gross balance of primary incomes, otherwise known as gross national income.</p>
+<p><strong>1.7.4 — Secondary distribution of income account.</strong> Adds current taxes on income and wealth, social contributions and benefits, and other current transfers, to reach gross disposable income (B.6g) — the figure the next account starts from.</p>
+<p><strong>1.7.5 — Redistribution of income in kind account.</strong> Adds social transfers in kind (D.63) to reach adjusted gross disposable income (B.7g).</p>
+</div>
+
+<section class="acct">
+<div class="arrow">↓</div>
+<div class="explain"><span class="lab">WHAT THIS ACCOUNT SHOWS</span><p>What each sector did with the income it ended up with. Disposable income arrives as a resource, after the tax, benefit and transfer stages that are not shown here. The uses side splits it two ways: final consumption expenditure — spending on goods and services that are used up now — and whatever is not spent, which is the balancing item, gross saving.</p></div>
+<h2>Use of disposable income account</h2>
+<div class="tcap">Table 1.7.6_a: Use of disposable income account, Resources</div><div class="scroll"><table class="na"><thead><tr><th class="c">Code</th><th class="l">Item</th><th class="num"><span class="hn">UK total economy</span><span class="hc">S.1</span></th><th class="num"><span class="hn">Non-financial corporations</span><span class="hc">S.11</span></th><th class="num"><span class="hn">Financial corporations</span><span class="hc">S.12</span></th><th class="num"><span class="hn">General government</span><span class="hc">S.13</span></th><th class="num"><span class="hn">Households &amp; NPISH</span><span class="hc">S.14+S.15</span></th><th class="num"><span class="hn">Rest of the world</span><span class="hc">S.2</span></th></tr></thead><tbody>
+<tr class="bal"><td class="c">B.6g</td><td class="l">Disposable income, gross</td><td class="num">2,685,493</td><td class="num">295,521</td><td class="num">99,204</td><td class="num">550,618</td><td class="num">1,740,150</td><td class="num"><span class="dash">–</span></td></tr>
+<tr><td class="c">D.8</td><td class="l">Adjustment for the change in pension entitlements</td><td class="num">86,808</td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num">86,808</td><td class="num">−555</td></tr>
+<tr class="tot"><td class="c">TR</td><td class="l">Total resources</td><td class="num">2,772,301</td><td class="num">295,521</td><td class="num">99,204</td><td class="num">550,618</td><td class="num">1,826,958</td><td class="num"><span class="dash">–</span></td></tr>
+</tbody></table></div><div class="tcap">Table 1.7.6_b: Use of disposable income account, Uses</div><div class="scroll"><table class="na"><thead><tr><th class="c">Code</th><th class="l">Item</th><th class="num"><span class="hn">UK total economy</span><span class="hc">S.1</span></th><th class="num"><span class="hn">Non-financial corporations</span><span class="hc">S.11</span></th><th class="num"><span class="hn">Financial corporations</span><span class="hc">S.12</span></th><th class="num"><span class="hn">General government</span><span class="hc">S.13</span></th><th class="num"><span class="hn">Households &amp; NPISH</span><span class="hc">S.14+S.15</span></th><th class="num"><span class="hn">Rest of the world</span><span class="hc">S.2</span></th></tr></thead><tbody>
+<tr><td class="c">P.31</td><td class="l">Individual consumption expenditure</td><td class="num">2,079,545</td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num">370,642</td><td class="num">1,708,903</td><td class="num"><span class="dash">–</span></td></tr>
+<tr><td class="c">P.32</td><td class="l">Collective consumption expenditure</td><td class="num">196,727</td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num">196,727</td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td></tr>
+<tr class="tot"><td class="c">P.3</td><td class="l">Total final consumption expenditure</td><td class="num">2,276,272</td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num">567,369</td><td class="num">1,708,903</td><td class="num"><span class="dash">–</span></td></tr>
+<tr><td class="c">D.8</td><td class="l">Adjustment for the change in pension entitlements</td><td class="num">86,253</td><td class="num"><span class="dash">–</span></td><td class="num">86,253</td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td></tr>
+<tr class="bal"><td class="c">B.8g</td><td class="l">Gross saving</td><td class="num">409,776</td><td class="num">295,521</td><td class="num">12,951</td><td class="num">−16,751</td><td class="num">118,055</td><td class="num"><span class="dash">–</span></td></tr>
+<tr class="bal"><td class="c">B.12</td><td class="l">Current external balance</td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num">−98,257</td></tr>
+<tr class="tot"><td class="c">TU</td><td class="l">Total uses</td><td class="num">2,772,301</td><td class="num">295,521</td><td class="num">99,204</td><td class="num">550,618</td><td class="num">1,826,958</td><td class="num"><span class="dash">–</span></td></tr>
+<tr><td class="c">P.51c</td><td class="l">less consumption of fixed capital</td><td class="num">420,544</td><td class="num">238,615</td><td class="num">18,423</td><td class="num">56,355</td><td class="num">107,151</td><td class="num"><span class="dash">–</span></td></tr>
+<tr class="bal"><td class="c">B.8n</td><td class="l">Saving, net</td><td class="num">−10,768</td><td class="num">56,906</td><td class="num">−5,472</td><td class="num">−73,106</td><td class="num">10,904</td><td class="num"><span class="dash">–</span></td></tr>
+</tbody></table></div>
+</section>
+
+<div class="note"><span class="lab">NOTE — TABLES NOT SHOWN HERE</span>
+<p>Tables 1.7.6_c and 1.7.6_d (use of adjusted disposable income — actual final consumption, P.4) and tables 1.7.7_a and 1.7.7_b (change in net worth due to saving and capital transfers — capital transfers, D.9) have been left out. At total-economy level the first pair duplicates the aggregates above, because social transfers in kind cancel out between resident sectors: P.4 equals P.3 (2,276,272) and B.7g equals B.6g (2,685,493).</p>
+</div>
+
+<section class="acct">
+<div class="arrow">↓</div>
+<div class="explain"><span class="lab">WHAT THIS ACCOUNT SHOWS</span><p>What happened to that saving. The uses side records spending on new physical assets: gross fixed capital formation, which is new buildings, machinery and infrastructure, plus changes in inventories and valuables. If a sector&rsquo;s saving exceeds what it spent on such assets, it lends the difference to others; if it falls short, it borrows. That balancing item is net lending or net borrowing.</p></div>
+<h2>Acquisition of non-financial assets account</h2>
+<div class="tcap">Table 1.7.7_c: Acquisition of non-financial assets account, Changes in liabilities and net worth</div><div class="scroll"><table class="na"><thead><tr><th class="c">Code</th><th class="l">Item</th><th class="num"><span class="hn">UK total economy</span><span class="hc">S.1</span></th><th class="num"><span class="hn">Non-financial corporations</span><span class="hc">S.11</span></th><th class="num"><span class="hn">Financial corporations</span><span class="hc">S.12</span></th><th class="num"><span class="hn">General government</span><span class="hc">S.13</span></th><th class="num"><span class="hn">Households &amp; NPISH</span><span class="hc">S.14+S.15</span></th><th class="num"><span class="hn">Rest of the world</span><span class="hc">S.2</span></th></tr></thead><tbody>
+<tr class="bal"><td class="c">B.101n</td><td class="l">Changes in net worth due to net saving and capital transfers</td><td class="num">−15,259</td><td class="num">61,747</td><td class="num">32,838</td><td class="num">−136,615</td><td class="num">26,771</td><td class="num"><span class="dash">–</span></td></tr>
+<tr><td class="c">P.51c</td><td class="l">Consumption of fixed capital</td><td class="num">420,544</td><td class="num">238,615</td><td class="num">18,423</td><td class="num">56,355</td><td class="num">107,151</td><td class="num"><span class="dash">–</span></td></tr>
+<tr class="bal"><td class="c">B.101g</td><td class="l">Changes in net worth due to gross saving and capital transfers</td><td class="num">405,285</td><td class="num">300,362</td><td class="num">51,261</td><td class="num">−80,260</td><td class="num">133,922</td><td class="num">102,748</td></tr>
+</tbody></table></div><div class="tcap">Table 1.7.7_d: Acquisition of non-financial assets account, Changes in assets</div><div class="scroll"><table class="na"><thead><tr><th class="c">Code</th><th class="l">Item</th><th class="num"><span class="hn">UK total economy</span><span class="hc">S.1</span></th><th class="num"><span class="hn">Non-financial corporations</span><span class="hc">S.11</span></th><th class="num"><span class="hn">Financial corporations</span><span class="hc">S.12</span></th><th class="num"><span class="hn">General government</span><span class="hc">S.13</span></th><th class="num"><span class="hn">Households &amp; NPISH</span><span class="hc">S.14+S.15</span></th><th class="num"><span class="hn">Rest of the world</span><span class="hc">S.2</span></th></tr></thead><tbody>
+<tr><td class="c">P.51g</td><td class="l">Gross fixed capital formation</td><td class="num">520,091</td><td class="num">288,351</td><td class="num">17,177</td><td class="num">88,233</td><td class="num">126,330</td><td class="num"><span class="dash">–</span></td></tr>
+<tr><td class="c">P.52</td><td class="l">Changes in inventories</td><td class="num">1,284</td><td class="num">1,339</td><td class="num">0</td><td class="num">−255</td><td class="num">200</td><td class="num"><span class="dash">–</span></td></tr>
+<tr><td class="c">P.53</td><td class="l">Acquisitions less disposals of valuables [note 12]</td><td class="num">−13,342</td><td class="num">1,803</td><td class="num">−15,457</td><td class="num">76</td><td class="num">236</td><td class="num"><span class="dash">–</span></td></tr>
+<tr class="tot"><td class="c">P.5</td><td class="l">Total gross capital formation</td><td class="num">508,033</td><td class="num">291,493</td><td class="num">1,720</td><td class="num">88,054</td><td class="num">126,766</td><td class="num"><span class="dash">–</span></td></tr>
+<tr><td class="c">NP</td><td class="l">Acquisitions less disposals of non-produced non-financial assets</td><td class="num">507</td><td class="num">2,625</td><td class="num">4</td><td class="num">−2,009</td><td class="num">−113</td><td class="num">−507</td></tr>
+<tr class="disc"><td class="c">de</td><td class="l">Statistical discrepancy between expenditure components and GDP</td><td class="num">0</td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td><td class="num"><span class="dash">–</span></td></tr>
+<tr class="bal"><td class="c">B.9n</td><td class="l">Net lending/net borrowing</td><td class="num">−103,255</td><td class="num">6,244</td><td class="num">49,537</td><td class="num">−166,305</td><td class="num">7,269</td><td class="num">103,255</td></tr>
+<tr class="bal"><td class="c">B.101g</td><td class="l">Total change in assets</td><td class="num">405,285</td><td class="num">300,362</td><td class="num">51,261</td><td class="num">−80,260</td><td class="num">133,922</td><td class="num">102,748</td></tr>
+</tbody></table></div>
+</section>
+
+<div class="note"><span class="lab">NOTE — THE REMAINING 1.7 ACCOUNTS</span>
+<p>The rest of the 1.7 sequence has been left out. Those accounts concern financial transactions and stocks rather than production, income and non-financial capital: the financial account (<strong>1.7.8</strong> net acquisition of financial assets; <strong>1.7.8_2</strong> net acquisition of financial liabilities), the other changes in volume of assets account (<strong>1.7.9</strong>), the revaluation account (<strong>1.7.10</strong>, nominal holding gains and losses) and the closing financial balance sheet (<strong>1.7.11</strong> total financial assets; <strong>1.7.11_2</strong> total financial liabilities).</p>
+</div>
+
+<section class="checkq-section">
+<h2>Check your knowledge</h2>
+<p class="checkq-intro">Remember how GDP should be the same from the production, income and expenditure side? Let's check if it works for the UK national accounts. For each formula below, find the right code in the tables above and type it into the box — then see if your route to GDP actually adds up.</p>
+
+<div class="checkq" data-check="production">
+  <h3>1. From the production side</h3>
+  <p class="formula">GDP = Output at market prices net of intermediate consumption<br>= Output + taxes less subsidies − intermediate consumption</p>
+  <div class="checkq-row">
+    <div class="checkq-field"><label>Output</label><input type="text" placeholder="e.g. P.2" data-idx="0"></div>
+    <span class="checkq-op">+</span>
+    <div class="checkq-field"><label>Taxes on products</label><input type="text" placeholder="e.g. P.2" data-idx="1"></div>
+    <span class="checkq-op">−</span>
+    <div class="checkq-field"><label>Subsidies on products</label><input type="text" placeholder="e.g. P.2" data-idx="2"></div>
+    <span class="checkq-op">−</span>
+    <div class="checkq-field"><label>Intermediate consumption</label><input type="text" placeholder="e.g. P.2" data-idx="3"></div>
+    <span class="checkq-eq">= GDP?</span>
+  </div>
+  <button class="checkq-btn">Check my answer</button>
+  <div class="checkq-result"></div>
+</div>
+
+<div class="checkq" data-check="income">
+  <h3>2. From the income side</h3>
+  <p class="formula">GDP = Compensation of employees + Taxes on production and imports − Subsidies + Operating surplus + Mixed income</p>
+  <div class="checkq-row">
+    <div class="checkq-field"><label>Compensation of employees</label><input type="text" placeholder="e.g. P.2" data-idx="0"></div>
+    <span class="checkq-op">+</span>
+    <div class="checkq-field"><label>Taxes on production &amp; imports</label><input type="text" placeholder="e.g. P.2" data-idx="1"></div>
+    <span class="checkq-op">−</span>
+    <div class="checkq-field"><label>Subsidies</label><input type="text" placeholder="e.g. P.2" data-idx="2"></div>
+    <span class="checkq-op">+</span>
+    <div class="checkq-field"><label>Operating surplus, gross</label><input type="text" placeholder="e.g. P.2" data-idx="3"></div>
+    <span class="checkq-op">+</span>
+    <div class="checkq-field"><label>Mixed income, gross</label><input type="text" placeholder="e.g. P.2" data-idx="4"></div>
+    <span class="checkq-eq">= GDP?</span>
+  </div>
+  <button class="checkq-btn">Check my answer</button>
+  <div class="checkq-result"></div>
+</div>
+
+<div class="checkq" data-check="expenditure">
+  <h3>3. From the expenditure side</h3>
+  <p class="formula">GDP = C + I + G + (X − M)</p>
+  <div class="checkq-row">
+    <div class="checkq-field"><label>Final consumption (C+G)</label><input type="text" placeholder="e.g. P.2" data-idx="0"></div>
+    <span class="checkq-op">+</span>
+    <div class="checkq-field"><label>Gross capital formation (I)</label><input type="text" placeholder="e.g. P.2" data-idx="1"></div>
+    <span class="checkq-op">+</span>
+    <div class="checkq-field"><label>Exports (X)</label><input type="text" placeholder="e.g. P.2" data-idx="2"></div>
+    <span class="checkq-op">−</span>
+    <div class="checkq-field"><label>Imports (M)</label><input type="text" placeholder="e.g. P.2" data-idx="3"></div>
+    <span class="checkq-eq">= GDP?</span>
+  </div>
+  <button class="checkq-btn">Check my answer</button>
+  <div class="checkq-result"></div>
+  <p style="font-size:12px;color:var(--ink-faint);margin:10px 0 0;">One difference from the simplified theory: under the System of National Accounts, government spending isn't lumped together in G. Its current spending — wages, day-to-day running costs — is recorded as government final consumption expenditure (part of C+G above). Its investment spending — new hospitals, roads, equipment — is recorded separately, inside gross capital formation (I), in a different table entirely.</p>
+</div>
+</section>
+
+<footer class="src">
+<p><strong>Source:</strong> Office for National Statistics, <em>UK National Accounts, The Blue Book: 2025</em>, reference tables, worksheets 1.7.1, 1.7.2, 1.7.6 and 1.7.7 (UK summary accounts 2023: total economy, all sectors and the rest of the world).</p>
+<p>Sub-sector detail available in the original workbook has been condensed here to the main institutional sectors. Figures are as published; no adjustments have been made.</p>
+<p><a href="https://www.ons.gov.uk/economy/grossdomesticproductgdp/compendium/unitedkingdomnationalaccountsthebluebook/2025" target="_blank" rel="noopener">UK National Accounts, The Blue Book: 2025 →</a><br>
+<a href="https://www.ons.gov.uk/economy/grossdomesticproductgdp/compendium/unitedkingdomnationalaccountsthebluebook/2025/supplementarytables" target="_blank" rel="noopener">Blue Book 2025 reference tables (xlsx) →</a></p>
+</footer></div><script>
+(function(){
+  "use strict";
+
+  // Master lookup: normalised code -> {label, value}. UK total economy, 2023, £m.
+  // Source: ONS Blue Book 2025 reference tables, worksheets 1.7.1, 1.7.2 (this page) and 1.2_b (main GDP page).
+  var CODES = {
+    "TR":   { label: "Total resources",                         value: 5074580 },
+    "P.1":  { label: "Total output",                             value: 4819806 },
+    "D.21": { label: "Taxes on products",                        value: 291938 },
+    "D.31": { label: "Subsidies on products",                    value: 37164 },
+    "P.2":  { label: "Intermediate consumption",                 value: 2322416 },
+    "D.1":  { label: "Compensation of employees",                value: 1329778 },
+    "D.2":  { label: "Taxes on production and imports",          value: 336032 },
+    "D.3":  { label: "Subsidies",                                value: 55030 },
+    "B.2G": { label: "Operating surplus, gross",                 value: 971499 },
+    "B.3G": { label: "Mixed income, gross",                      value: 169885 },
+    "P.3":  { label: "Total final consumption expenditure",      value: 2276272 },
+    "P.5":  { label: "Total gross capital formation",            value: 508033 },
+    "P.6":  { label: "Total exports of goods and services",      value: 878278 },
+    "P.7":  { label: "Total imports of goods and services",      value: 910419 }
+  };
+  var GDP_ACTUAL = 2752164;
+
+  var CHECKS = {
+    production: { codes: ["P.1","D.21","D.31","P.2"],   ops: ["+","+","-","-"] },
+    income:     { codes: ["D.1","D.2","D.3","B.2G","B.3G"], ops: ["+","+","-","+","+"] },
+    expenditure:{ codes: ["P.3","P.5","P.6","P.7"],      ops: ["+","+","+","-"] }
+  };
+
+  function norm(s) {
+    return (s || "").trim().toUpperCase().replace(/\s+/g, "");
+  }
+
+  function fmt(n) {
+    var sign = n < 0 ? "\u2212" : "";
+    return sign + "\u00A3" + Math.abs(Math.round(n)).toLocaleString() + "m";
+  }
+
+  function buildSolutionLine(check) {
+    var parts = [];
+    check.codes.forEach(function(code, i) {
+      var op = check.ops[i];
+      var entry = CODES[code];
+      var opSym = op === "-" ? "\u2212" : (i === 0 ? "" : "+");
+      parts.push((i === 0 ? "" : " " + opSym + " ") + code + " (" + fmt(entry.value) + ")");
+    });
+    return "GDP = " + parts.join("") + " = " + fmt(GDP_ACTUAL);
+  }
+
+  document.querySelectorAll(".checkq").forEach(function(box) {
+    var key = box.getAttribute("data-check");
+    var check = CHECKS[key];
+    var inputs = Array.prototype.slice.call(box.querySelectorAll("input[data-idx]"));
+    var btn = box.querySelector(".checkq-btn");
+    var result = box.querySelector(".checkq-result");
+
+    btn.addEventListener("click", function() {
+      var enteredCodes = inputs.map(function(inp) { return norm(inp.value); });
+      var allValid = true;
+      var runningTotal = 0;
+      var sumParts = [];
+
+      enteredCodes.forEach(function(code, i) {
+        var op = check.ops[i];
+        var entry = CODES[code];
+        var opSym = op === "-" ? "\u2212" : (i === 0 ? "" : "+");
+        if (!entry) {
+          allValid = false;
+          sumParts.push((i === 0 ? "" : " " + opSym + " ") + (code || "?") + " (code not recognised)");
+        } else {
+          var signedVal = (op === "-" ? -1 : 1) * entry.value;
+          runningTotal += signedVal;
+          sumParts.push((i === 0 ? "" : " " + opSym + " ") + code + " (" + fmt(entry.value) + ")");
+        }
+      });
+
+      var isCorrect = allValid && runningTotal === GDP_ACTUAL;
+      var codesMatchExpected = enteredCodes.length === check.codes.length &&
+        enteredCodes.every(function(c, i) { return c === check.codes[i]; });
+
+      result.className = "checkq-result show " + (isCorrect && codesMatchExpected ? "correct" : "incorrect");
+
+      var html = "";
+      if (isCorrect && codesMatchExpected) {
+        html += '<span class="verdict">Correct!</span>';
+        html += '<span class="sum">GDP = ' + sumParts.join("") + " = " + fmt(runningTotal) + "</span>";
+      } else {
+        html += '<span class="verdict">Not quite.</span>';
+        html += '<span class="sum">Your route: GDP = ' + sumParts.join("") + " = " + (allValid ? fmt(runningTotal) : "n/a") + "</span>";
+        html += '<span class="solution">Correct solution:<br>' + buildSolutionLine(check) + '</span>';
+      }
+      result.innerHTML = html;
+    });
+  });
+})();
+</script>
+</body></html>
